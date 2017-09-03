@@ -23,15 +23,40 @@ pipeline {
     stages {
 
         stage('Build') {
-
+            steps {
 
                echo 'This is a minimal pipeline.'
+            }
+        }
+         stage('Build2') {
+            steps {
+
+
                echo 'This is also minimal pipeline.'
 
-               echo repoUrl
-               sh 'mvn clean install'
-               setBuildStatus(repoUrl, "ci/approve", "Aprove after testing", "PENDING", "")
 
+            }
         }
+        stage('Build2') {
+            steps {
+
+
+                 echo repoUrl
+                  }
+        }
+        stage('Build3') {
+             steps {
+                 sh 'mvn clean install'
+
+
+            }
+        }
+        stage('status') {
+                     steps {
+                         setBuildStatus(repoUrl, "ci/approve", "Aprove after testing", "PENDING", "")
+
+
+                    }
+                }
     }
 }

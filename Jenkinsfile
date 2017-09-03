@@ -11,8 +11,10 @@ void setBuildStatus(String url, String context, String message, String state, St
 }
 
 def getRepoURL = {
+  sh "git config --get remote.origin.url"
   sh "git config --get remote.origin.url > originurl"
-  return readFile("originurl").trim()
+  def originurl = readFile("originurl").trim()
+  return originurl
 }
 def repoUrl = ""
 pipeline {
@@ -24,7 +26,7 @@ pipeline {
 
                echo 'This is a minimal pipeline.'
                echo 'This is also minimal pipeline.'
-                repoUrl = getRepoURL()
+               repoUrl = getRepoURL()
                echo repoUrl
                sh 'mvn clean install'
                setBuildStatus(repoUrl, "ci/approve", "Aprove after testing", "PENDING", "")

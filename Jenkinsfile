@@ -1,4 +1,4 @@
-def setBuildStatus = { String url, String context, String message, String state, String backref ->
+void setBuildStatus = (String url, String context, String message, String state, String backref){ ->
   step([
     $class: "GitHubCommitStatusSetter",
     reposSource: [$class: "ManuallyEnteredRepositorySource", url: url ],
@@ -16,13 +16,13 @@ def getRepoURL = {
 }
 
 pipeline {
-    agent any
+    agent anygogits/go-gogs-client
     stages {
         stage('Build') {
             steps {
                echo 'This is a minimal pipeline.'
                echo 'This is also minimal pipeline.'
-               var repoUrl = getRepoURL()
+               def repoUrl = getRepoURL()
                echo repoUrl
                sh 'mvn clean install'
                setBuildStatus(repoUrl, "ci/approve", "Aprove after testing", "PENDING", "")

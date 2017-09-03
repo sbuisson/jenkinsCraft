@@ -16,8 +16,7 @@ def getRepoURL = {
   def originurl = readFile("originurl").trim()
   return originurl
 }
-def repoUrl = ""
-repoUrl = getRepoURL()
+def repoUrl = "orignalRepoURL"
 pipeline {
     agent any
     stages {

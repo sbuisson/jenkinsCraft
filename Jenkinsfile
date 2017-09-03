@@ -45,9 +45,8 @@ pipeline {
         }
         stage('mvn') {
             steps {
-                def mvnContainer = docker.image('jimschubert/8-jdk-alpine-mvn')
-
                 script {
+                    def mvnContainer = docker.image('jimschubert/8-jdk-alpine-mvn')
                     mvnContainer.inside('-v /m2repo:/m2repo') {
                         // Build with maven settings.xml file that specs the local Maven repo.
                         sh 'mvn clean install'

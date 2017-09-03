@@ -51,6 +51,7 @@ pipeline {
 
                        // Build with maven settings.xml file that specs the local Maven repo.
                        sh 'mvn clean install'
+                       }
             }
         }
         stage('status') {

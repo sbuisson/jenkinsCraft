@@ -18,12 +18,13 @@ def getRepoURL = {
 pipeline {
     agent any
     stages {
+     def repoUrl= getRepoURL()
         stage('Build') {
             steps {
-                def repoUrl
+
                echo 'This is a minimal pipeline.'
                echo 'This is also minimal pipeline.'
-                repoUrl = getRepoURL()
+
                echo repoUrl
                sh 'mvn clean install'
                setBuildStatus(repoUrl, "ci/approve", "Aprove after testing", "PENDING", "")

@@ -1,4 +1,4 @@
-void setBuildStatus = (String url, String context, String message, String state, String backref){ ->
+void setBuildStatus(String url, String context, String message, String state, String backref){
   step([
     $class: "GitHubCommitStatusSetter",
     reposSource: [$class: "ManuallyEnteredRepositorySource", url: url ],

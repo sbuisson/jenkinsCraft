@@ -22,7 +22,7 @@ pipeline {
             steps {
                echo 'This is a minimal pipeline.'
                echo 'This is also minimal pipeline.'
-               def repoUrl = getRepoURL()
+               var repoUrl = getRepoURL()
                echo repoUrl
                sh 'mvn clean install'
                setBuildStatus(repoUrl, "ci/approve", "Aprove after testing", "PENDING", "")

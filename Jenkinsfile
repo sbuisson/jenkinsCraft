@@ -16,7 +16,7 @@ def getRepoURL = {
 }
 
 pipeline {
-    agent anygogits/go-gogs-client
+    agent any
     stages {
         stage('Build') {
             steps {

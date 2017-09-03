@@ -14,11 +14,11 @@ def getRepoURL = {
   sh "git config --get remote.origin.url > originurl"
   return readFile("originurl").trim()
 }
-
+def repoUrl = ""
 pipeline {
     agent any
     stages {
-     def repoUrl = ""
+
         stage('Build') {
             steps {
 

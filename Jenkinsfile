@@ -37,7 +37,7 @@ pipeline {
 
             }
         }
-        stage('Build2') {
+        stage('repoUrl') {
             steps {
 
 

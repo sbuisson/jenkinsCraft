@@ -79,7 +79,7 @@ pipeline {
 
         stage('analyse') {
             steps {
-
+                script{
 
 
                 // Set job description with PR title
@@ -114,7 +114,7 @@ pipeline {
                         }
                     }
                 }
-
+}
 
 
 

@@ -78,49 +78,49 @@ pipeline {
 
 
         stage('analyse') {
-                     steps {
+            steps {
 
 
 
-     // Set job description with PR title
-     if (env.BRANCH_NAME.startsWith('PR')) {
-       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
-         def resp = httpRequest url: "https://api.github.com/repos/sbuisson/jenkinscraft/pulls/${env.BRANCH_NAME.substring(3)}", customHeaders: [[name: 'Authorization', value: "token ${env.GH_PASSWORD}"]]
-         def ttl = getTitle(resp)
-         def itm = getItem(env.BRANCH_NAME)
-         itm.setDisplayName("PR-${env.BRANCH_NAME.substring(3)} '${ttl}'")
-       }
-     }
-     gitClean()
-     checkout scm
-     withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
-       if ("master" == env.BRANCH_NAME) {
-         sh "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install"
-       } else {
-         sh "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package"
-       }
-     }
-     archiveArtifacts artifacts: 'target/*.hpi'
-     // step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
-
-     if ("master" == env.BRANCH_NAME) {
-       withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
-         sh "mvn -Dsonar.host.url=http://sonar.riverside-software.fr sonar:sonar"
-       }
-     } else {
-       withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
-         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'GitHub-GQuerret', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
-           sh "mvn -Dsonar.host.url=http://sonar.riverside-software.fr -Dsonar.analysis.mode=issues -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)} -Dsonar.github.repository=jakejustus/openedge-jenkins-public -Dsonar.github.oauth=${env.GH_PASSWORD} sonar:sonar"
-         }
-       }
-     }
-
-
-
-
-
+                // Set job description with PR title
+                if (env.BRANCH_NAME.startsWith('PR')) {
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
+                        def resp = httpRequest url: "https://api.github.com/repos/sbuisson/jenkinscraft/pulls/${env.BRANCH_NAME.substring(3)}", customHeaders: [[name: 'Authorization', value: "token ${env.GH_PASSWORD}"]]
+                        def ttl = getTitle(resp)
+                        def itm = getItem(env.BRANCH_NAME)
+                        itm.setDisplayName("PR-${env.BRANCH_NAME.substring(3)} '${ttl}'")
                     }
                 }
+
+                checkout scm
+                withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
+                    if ("master" == env.BRANCH_NAME) {
+                        sh "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install"
+                    } else {
+                        sh "mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package"
+                    }
+                }
+                archiveArtifacts artifacts: 'target/*.hpi'
+                    // step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
+
+                if ("master" == env.BRANCH_NAME) {
+                    withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
+                        sh "mvn -Dsonar.host.url=http://sonar.riverside-software.fr sonar:sonar"
+                    }
+                } else {
+                    withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
+                        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'GitHub-GQuerret', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
+                            sh "mvn -Dsonar.host.url=http://sonar.riverside-software.fr -Dsonar.analysis.mode=issues -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)} -Dsonar.github.repository=jakejustus/openedge-jenkins-public -Dsonar.github.oauth=${env.GH_PASSWORD} sonar:sonar"
+                        }
+                    }
+                }
+
+
+
+
+
+            }
+        }
     }
 }
 

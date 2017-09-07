@@ -84,7 +84,7 @@ pipeline {
 
                 // Set job description with PR title
                 if (env.BRANCH_NAME.startsWith('PR')) {
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'git-xebia', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                         def resp = httpRequest url: "https://api.github.com/repos/sbuisson/jenkinscraft/pulls/${env.BRANCH_NAME.substring(3)}", customHeaders: [[name: 'Authorization', value: "token ${env.GH_PASSWORD}"]]
                         def ttl = getTitle(resp)
                         def itm = getItem(env.BRANCH_NAME)

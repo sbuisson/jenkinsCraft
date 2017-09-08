@@ -112,7 +112,8 @@ pipeline {
                         echo "sonar branch"
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'git-xebia', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                             echo "sonar branch"
-                            sh "mvn -Dsonar.host.url=http://sonar.riverside-software.fr -Dsonar.analysis.mode=issues -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)} -Dsonar.github.repository=sbuisson/jenkinsCraft -Dsonar.github.oauth=${env.GH_PASSWORD} sonar:sonar"
+                            echo "sonar branch"
+                            sh "mvn -Dsonar.host.url=http://sonar.riverside-software.fr -Dsonar.analysis.mode=issues -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)} -Dsonar.github.repository=sbuisson/jenkinsCraft -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} sonar:sonar"
                         }
                     }
                 }

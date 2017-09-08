@@ -83,14 +83,14 @@ pipeline {
 
 
                 // Set job description with PR title
-                if (env.BRANCH_NAME.startsWith('PR')) {
+               /* if (env.BRANCH_NAME.startsWith('PR')) {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'git-xebia', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                         def resp = httpRequest url: "https://api.github.com/repos/sbuisson/jenkinsCraft/pulls/${env.BRANCH_NAME.substring(3)}", customHeaders: [[name: 'Authorization', value: "token ${env.GH_PASSWORD}"]]
                         def ttl = getTitle(resp)
                         def itm = getItem(env.BRANCH_NAME)
                         itm.setDisplayName("PR-${env.BRANCH_NAME.substring(3)} '${ttl}'")
                     }
-                }
+                }*/
                 checkout scm
                 withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
                     if ("master" == env.BRANCH_NAME) {

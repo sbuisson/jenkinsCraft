@@ -115,7 +115,8 @@ pipeline {
                             echo "sonar branch"
                             sh "mvn -Dsonar.host.url=http://localhost:9000 -Dsonar.analysis.mode=issues -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)} -Dsonar.github.repository=sbuisson/jenkinsCraft -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} sonar:sonar mvn sonar:sonar \
   -Dsonar.host.url=http://localhost:9000 \
-  -Dsonar.login=74860d95a732499b8d88e0ed04f878e27f208920"
+  -Dsonar.login=admin \
+  -Dsonar.password=admin                        "
                         }
                     }
                 }

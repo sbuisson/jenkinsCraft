@@ -113,7 +113,11 @@ pipeline {
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                             echo "sonar branch"
                             echo "sonar branch"
-                            sh "mvn -Dsonar.host.url=http://sonarqube:9000 -Dsonar.analysis.mode=issues -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)} -Dsonar.github.repository=sbuisson/jenkinsCraft -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} sonar:sonar mvn sonar:sonar \
+                            sh "mvn -Dsonar.host.url=http://sonarqube:9000\
+                          -Dsonar.analysis.mode=issues\
+                          -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
+                          -Dsonar.github.repository=sbuisson/jenkinsCraft \
+                          -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} sonar:sonar \
   -Dsonar.host.url=http://sonarqube:9000 \
   -Dsonar.login=admin \
   -Dsonar.password=admin                        "

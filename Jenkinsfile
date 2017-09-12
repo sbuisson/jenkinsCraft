@@ -105,7 +105,7 @@ pipeline {
                 if ("master" == env.BRANCH_NAME) {
                     withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
                         echo "sonar master"
-                        sh "mvn -Dsonar.host.url=http://sonar.riverside-software.fr sonar:sonar"
+                        sh "mvn -Dsonar.host.url=http://sonarqube:9000 sonar:sonar"
                     }
                 } else {
                     withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
@@ -114,7 +114,7 @@ pipeline {
                             echo "sonar branch"
                             echo "sonar branch"
                             sh "mvn -Dsonar.host.url=http://sonarqube:9000 -Dsonar.analysis.mode=issues -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)} -Dsonar.github.repository=sbuisson/jenkinsCraft -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} sonar:sonar mvn sonar:sonar \
-  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.host.url=http://sonarqube:9000 \
   -Dsonar.login=admin \
   -Dsonar.password=admin                        "
                         }

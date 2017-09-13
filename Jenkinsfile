@@ -72,8 +72,6 @@ pipeline {
                      steps {
                      echo "status for ${env.BRANCH_NAME.substring(3)}"
                          setBuildStatus("https://github.com/sbuisson/jenkinsCraft/", "ci/approve", "Aprove after testidsng", "PENDING", "")
-                         setBuildStatus("https://github.com/sbuisson/jenkinsCraft/pulls/${env.BRANCH_NAME.substring(3)}", "ci/approve", "Aprdsdove after testing", "PENDING", "")
-                         setBuildStatus("https://api.github.com/repos/sbuisson/jenkinsCraft/pulls/${env.BRANCH_NAME.substring(3)}", "ci/approve", "Aprove after testing", "PENDING", "")
 
 
                     }
@@ -112,7 +110,7 @@ pipeline {
                     }
                 } else {
                     withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
-                        echo "sonar branch"
+                        echo "sonar branch ${env.GH_LOGIN}"
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                             echo "sonar branch"
                             echo "sonar branch"

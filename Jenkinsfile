@@ -70,7 +70,8 @@ pipeline {
         }
         stage('status') {
                      steps {
-                         setBuildStatus(repoUrl, "ci/approve", "Aprove after testing", "PENDING", "")
+                     echo "status for ${env.BRANCH_NAME.substring(3)}"
+                         setBuildStatus("https://api.github.com/repos/sbuisson/jenkinsCraft/pulls/${env.BRANCH_NAME.substring(3)}", "ci/approve", "Aprove after testing", "PENDING", "")
 
 
                     }

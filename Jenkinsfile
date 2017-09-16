@@ -110,7 +110,7 @@ pipeline {
                     }
                 } else {
                   
-                    withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
+                    
                         echo "sonar branch ${env.GH_LOGIN}"
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                             echo "sonar branch"
@@ -124,7 +124,7 @@ pipeline {
   -Dsonar.login=admin \
   -Dsonar.password=admin                        "
                         }
-                    }
+                    
                 }
 }
 

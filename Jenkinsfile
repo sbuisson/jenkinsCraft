@@ -93,12 +93,11 @@ pipeline {
                     }
                 }*/
                 checkout scm
-                withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
-                    if ("master" == env.BRANCH_NAME) {
+                     if ("master" == env.BRANCH_NAME) {
                         sh "mvn clean install"
                     } else {
                         sh "mvn clean install"
-                    }
+                    
                 }
                 archiveArtifacts artifacts: 'target/*.hpi'
                     // step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])

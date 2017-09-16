@@ -109,6 +109,7 @@ pipeline {
                         sh "mvn -Dsonar.host.url=http://sonarqube:9000 sonar:sonar"
                     }
                 } else {
+                  
                     withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
                         echo "sonar branch ${env.GH_LOGIN}"
                         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {

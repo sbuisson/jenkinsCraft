@@ -122,7 +122,7 @@ pipeline {
                           -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
                           -Dsonar.github.repository=sbuisson/jenkinsCraft \
                           -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} \
-                          -Dsonar.github.oauth=${env.OATH} \
+                          -Dsonar.github.oauth=${env.OATH} -Dsonar.pitest.mode=reuseReport \
                           sonar:sonar \
   -Dsonar.host.url=http://sonarqube:9000 \
   -Dsonar.login=admin \

@@ -68,11 +68,12 @@ pipeline {
 
 
         }
-        stage('docker') {   steps {
+        stage('docker') {
+           steps {
               checkout scm
-              docker.image('maven:3.3.3-jdk-8').inside {
+              docker.image('maven:3.3.3-jdk-8').inside("-v  $PWD:/data") {
                 writeFile file: 'settings.xml', text: "<settings><localRepository>${pwd()}/.m2repo</localRepository></settings>"
-                sh 'mvn -DskipTests=true -B -s settings.xml -P motif clean package'
+                sh 'mvn clean install'
 
               }
 }

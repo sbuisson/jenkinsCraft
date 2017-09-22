@@ -35,9 +35,7 @@ def getRepoURL = {
 
 def repoUrl = "orignalRepoURL"
 pipeline {
-    agent {
-                                docker { image 'maven:3-alpine' }
-    }
+    agent any
     stages {
 
         stage('Build') {

@@ -35,7 +35,9 @@ def getRepoURL = {
 
 def repoUrl = "orignalRepoURL"
 pipeline {
-    agent any
+    agent {
+                                docker { image 'maven:3-alpine' }
+    }
     stages {
 
         stage('Build') {
@@ -68,6 +70,15 @@ pipeline {
 
 
         }
+        stage('docker') {
+              checkout scm
+              docker.image('maven:3.3.3-jdk-8').inside {
+                writeFile file: 'settings.xml', text: "<settings><localRepository>${pwd()}/.m2repo</localRepository></settings>"
+                sh 'mvn -DskipTests=true -B -s settings.xml -P motif clean package'
+              }
+
+
+        }
         stage('status') {
                      steps {
                      echo "status for ${env.BRANCH_NAME.substring(3)}"
@@ -80,6 +91,7 @@ pipeline {
 
         stage('analyse') {
             steps {
+
                 script{
 
 

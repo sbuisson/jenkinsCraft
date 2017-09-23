@@ -71,8 +71,7 @@ pipeline {
         stage('docker') {
            steps {
               checkout scm
-              docker.image('maven:3.3.3-jdk-8').inside("-v  $PWD:/data") {
-                writeFile file: 'settings.xml', text: "<settings><localRepository>${pwd()}/.m2repo</localRepository></settings>"
+              val dock = docker.image('maven:3.3.3-jdk-8').inside("-v  $PWD/workspace:/data") {
                 sh 'mvn clean install'
 
               }
@@ -129,7 +128,8 @@ pipeline {
                         
                           echo "sonar branch"
                             echo "sonar branch"
-                            sh "mvn -Dsonar.host.url=http://sonarqube:9000\
+                            sh "mvn pitest:mutationCoverage \
+                            -Dsonar.host.url=http://sonarqube:9000\
                           -Dsonar.analysis.mode=preview\
                           -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
                           -Dsonar.github.repository=sbuisson/jenkinsCraft \

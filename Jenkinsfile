@@ -62,6 +62,7 @@ pipeline {
         }
 
         stage('docker') {
+            agent { label "dockerserver" }
             steps {
                 checkout scm
                 script {

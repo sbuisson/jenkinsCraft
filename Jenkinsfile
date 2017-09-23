@@ -71,7 +71,7 @@ pipeline {
         stage('docker') {
            steps {
               checkout scm
-              val dock = docker.image('maven:3.3.3-jdk-8').inside("-v  $PWD/workspace:/data") {
+              docker.image('maven:3.3.3-jdk-8').inside("-v  $PWD/workspace:/data") {
                 sh 'mvn clean install'
 
               }

@@ -72,6 +72,9 @@ pipeline {
            steps {
               checkout scm
               docker.image('maven:3.3.3-jdk-8').inside("-v  $PWD/workspace:/data") {
+               echo "docker, baby!"
+               sh "pwd"
+               sh "ls -lrt"
                 sh 'mvn clean install'
 
               }

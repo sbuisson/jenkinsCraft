@@ -67,7 +67,7 @@ pipeline {
                 script {
                     docker
                         .image('maven:3.3.3-jdk-8')
-                        .inside("-v  $PWD/workspaceBis:/data") {
+                        .inside("-v  ${pwd()}/workspaceBis:/data") {
                             echo "docker, baby!"
                             sh "pwd"
                             sh "ls -lrt"
@@ -95,7 +95,7 @@ pipeline {
                 script {
                     docker
                         .image('maven:3.3.3-jdk-8')
-                        .inside("-v  $PWD/workspaceTer:/data") {
+                        .inside("-v  ${pwd()}/workspaceTer:/data") {
 
 
                             // Set job description with PR title

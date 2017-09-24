@@ -56,7 +56,7 @@ pipeline {
                 sh 'pwd > workspace'
                 workspace2 = readFile('workspace').trim()
                 println workspace2
-                echo ${WORKSPACE}
+                echo "${WORKSPACE}"
 
 def body="""{
                              "body": "Nice change $workspace2 $WORKSPACE",

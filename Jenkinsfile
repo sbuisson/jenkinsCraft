@@ -44,7 +44,7 @@ pipeline {
                echo 'This is a minimal pipeline.'
             }
         }
-         stage('send Message') {
+        stage('send Message') {
             steps {
 
 script {

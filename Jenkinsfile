@@ -161,7 +161,7 @@ pipeline {
                                             -Dsonar.password=admin "
 
 
-                                            sendCommentToPullRequest("build ${env.BUILD_URL} ${env.BUILD_URL}")
+                                            sendCommentToPullRequest("build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}")
                                     }
                     
                                 }

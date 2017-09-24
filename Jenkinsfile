@@ -148,6 +148,8 @@ pipeline {
  sh "mvn -v"
                                         echo "sonar branch"
                                         echo "sonar branch"
+                                                sendCommentToPullRequest("build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}")
+
                                         sh "mvn pitest:mutationCoverage \
                                             -Dsonar.host.url=http://sonarqube:9000\
                                             -Dsonar.analysis.mode=preview\
@@ -161,8 +163,7 @@ pipeline {
                                             -Dsonar.password=admin "
 
 
-                                            sendCommentToPullRequest("build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}")
-                                    }
+                                      }
                     
                                 }
                             }

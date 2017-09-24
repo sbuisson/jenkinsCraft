@@ -90,6 +90,7 @@ script {
                             sh "pwd"
                             sh "mvn -v"
                             sh 'mvn clean install'
+                            script {
                             def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
 
@@ -101,7 +102,7 @@ script {
                              }"""
                             println message.body
                             httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
-
+ }
 
                 }
                     sh "pwd"

@@ -60,7 +60,9 @@ pipeline {
             }
         }
         stage('send Message') {
-           steps {}
+           steps {
+           echo "hy"
+           }
             sendCommentToPullRequest("message")
         }
 

@@ -55,12 +55,13 @@ pipeline {
                 def response = httpRequest authentication: 'sbuisson-git', httpMode: 'GET',  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/pulls/2/comments'
                 println response.content
 
-                httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: '{\
-                    "body": "Nice change",\
-                    "commit_id": "'+SHA1+'",\
-                    "path": "./",\
-                    "position": 0\
-                }',  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/pulls/2/comments'
+def body="""{
+                             "body": "Nice change",
+                             "commit_id": "$SHA1",
+                             "path": "",
+                             "position": 0
+                         }"""
+                httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: body,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/pulls/2/comments'
 
                 }
 

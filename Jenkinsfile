@@ -61,6 +61,8 @@ def body="""{
                              "path": "",
                              "position": 0
                          }"""
+
+                         println body
                 httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: body,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/pulls/2/comments'
 
                 }

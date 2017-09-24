@@ -47,8 +47,8 @@ pipeline {
          stage('send Message') {
             steps {
 
-script{
-def SHA12 ='3333'
+script {
+//def SHA12 ='3333'
               //  def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
                 //echo '$SHA1'
 

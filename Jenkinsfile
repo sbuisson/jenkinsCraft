@@ -64,9 +64,10 @@ pipeline {
             steps {
 script {
                  def repoUrl = ''
+                  }
                  repoUrl = getRepoURL()
                  echo repoUrl
-                 }
+
               }
 
         }

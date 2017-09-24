@@ -55,7 +55,7 @@ pipeline {
         stage('Build') {
             steps {
 
-def repoUrl = getRepoURL()
+
                echo 'This is a minimal pipeline.'
             }
         }
@@ -70,9 +70,10 @@ def repoUrl = getRepoURL()
         }
         stage('repoUrl') {
             steps {
-
-
+script{
+ def repoUrl = getRepoURL()
                  echo repoUrl
+                 }
                   }
         }
 

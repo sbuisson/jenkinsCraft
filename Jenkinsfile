@@ -91,7 +91,9 @@ pipeline {
         stage('analyse') {
             steps {
                 checkout scm
+
                 script {
+                    sh "mvn -v"
                     docker
                         .image('maven:3.3.3-jdk-8')
                         .inside("-v  ${pwd()}/workspaceTer:/data") {
@@ -125,7 +127,7 @@ pipeline {
 
 
                                 echo "sonar branch ${env.GH_LOGIN}"
- sh "mvn -v"
+
                                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                                     withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
  sh "mvn -v"

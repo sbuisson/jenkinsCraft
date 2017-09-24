@@ -62,12 +62,13 @@ pipeline {
         stage('send Message') {
             steps {
 
-                sendCommentToPullRequest("message")
+
 
 
 
             }
         }
+           sendCommentToPullRequest("message")
         stage('repoUrl') {
             steps {
 script{

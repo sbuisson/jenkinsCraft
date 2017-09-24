@@ -70,11 +70,11 @@ pipeline {
                             sh "pwd"
                             sh "ls -lrt"
                             sh 'mvn clean install'
-                            }
-                        }
+                          }
+                }
                     sh "pwd"
                     sh "ls -lrt"
-                }
+
             }
 
         }

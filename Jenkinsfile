@@ -60,7 +60,7 @@ pipeline {
                     "commit_id": "'+SHA1+'",\
                     "path": "./",\
                     "position": 0\
-                }',  url: 'https://api.github.com/sbuisson/JenkinsCraft/Hello-World/pulls/1347/comments'
+                }',  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/pulls/2/comments'
 
                 }
 

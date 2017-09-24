@@ -10,7 +10,7 @@ void setBuildStatus(String url, String context, String message, String state, St
   ]);
 }
 
-void getRepoURL() {
+String getRepoURL() {
   sh "git config --get remote.origin.url"
   sh "git config --get remote.origin.url > originurl"
   def originurl = readFile("originurl").trim()
@@ -63,7 +63,7 @@ pipeline {
              stage('repoUrl') {
                     steps {
 
-                          def repoUrl = getRepoURL()
+                         def repoUrl = getRepoURL()
                          echo repoUrl
                       }
 

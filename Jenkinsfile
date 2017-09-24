@@ -53,7 +53,9 @@ pipeline {
                 echo "$SHA1"
 
                 def response = httpRequest authentication: 'sbuisson-git', httpMode: 'GET',  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
-                println response.content
+
+                println this
+                println this.context
 
 def body="""{
                              "body": "Nice change",

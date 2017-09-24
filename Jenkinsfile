@@ -58,7 +58,7 @@ pipeline {
 def body="""{
                              "body": "Nice change",
                              "commit_id": "$SHA1",
-                             "path": "",
+                             "path": "/",
                              "position": 0
                          }"""
 

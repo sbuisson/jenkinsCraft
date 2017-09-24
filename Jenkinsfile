@@ -60,6 +60,7 @@ pipeline {
             }
         }
         stage('send Message') {
+           steps {}
             sendCommentToPullRequest("message")
         }
 

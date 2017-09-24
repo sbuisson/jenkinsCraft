@@ -30,6 +30,7 @@ def getRepoURL = {
        jsonObject.title
    }
    def sendCommentToPullRequest(messageContent){
+
          def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
 
@@ -61,10 +62,9 @@ pipeline {
         stage('send Message') {
             steps {
 
-                script {
                 sendCommentToPullRequest("message")
 
-            }
+
 
             }
         }
@@ -150,7 +150,6 @@ pipeline {
  sh "mvn -v"
                                         echo "sonar branch"
                                         echo "sonar branch"
-                                                sendCommentToPullRequest("build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}")
 
                                         sh "mvn pitest:mutationCoverage \
                                             -Dsonar.host.url=http://sonarqube:9000\
@@ -172,6 +171,8 @@ pipeline {
                         }
 
                 }
+                sendCommentToPullRequest("build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}")
+
             }
         }
     }

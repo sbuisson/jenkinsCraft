@@ -85,6 +85,8 @@ pipeline {
                             sh "pwd"
                             sh "mvn -v"
                             sh 'mvn clean install'
+                            sendCommentToPullRequest("build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}")
+
 
                 }
                     sh "pwd"

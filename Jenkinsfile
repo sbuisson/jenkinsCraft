@@ -53,11 +53,13 @@ pipeline {
                 echo "$SHA1"
 
                 def response = httpRequest authentication: 'sbuisson-git', httpMode: 'GET',  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
-                println env.getEnvironment()
-                println this.toString()
+                sh 'pwd > workspace'
+                workspace2 = readFile('workspace').trim()
+                println workspace2
+                echo ${WORKSPACE}
 
 def body="""{
-                             "body": "Nice change",
+                             "body": "Nice change $workspace2 $WORKSPACE",
                              "commit_id": "$SHA1",
                              "path": "/",
                              "position": 0

@@ -29,7 +29,7 @@ void getRepoURL() {
        def jsonObject = slurper.parseText(json.content)
        jsonObject.title
    }
-   void sendCommentToPullRequest(messageContent){
+   void sendCommentToPullRequest(String messageContent){
 
          def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
@@ -59,6 +59,15 @@ pipeline {
                echo 'This is a minimal pipeline.'
             }
         }
+
+             stage('repoUrl') {
+                    steps {
+
+         def repoUrl = getRepoURL()
+                         echo repoUrl
+                         }
+
+                }
         stage('send Message') {
            steps {
            echo "hy"
@@ -66,14 +75,7 @@ pipeline {
             sendCommentToPullRequest("message")
         }
 
-        stage('repoUrl') {
-            steps {
-script{
- def repoUrl = getRepoURL()
-                 echo repoUrl
-                 }
-                  }
-        }
+
 
         stage('docker') {
             steps {

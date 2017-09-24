@@ -53,12 +53,13 @@ pipeline {
                 httpRequest authentication: 'sbuisson-git', httpMode: 'GET',  url: 'https://api.github.com/sbuisson/jenkinsCraft/pulls/2/comments'
 
 
-                httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: '{\
+              /*  httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: '{\
                     "body": "Nice change",\
                     "commit_id": "$SHA1",\
                     "path": "./",\
                     "position": 0\
                 }',  url: 'https://api.github.com/sbuisson/JenkinsCraft/Hello-World/pulls/1347/comments'
+                */
 
             }
         }

@@ -63,16 +63,17 @@ pipeline {
              stage('repoUrl') {
                     steps {
 
-         def repoUrl = getRepoURL()
+                          def repoUrl = getRepoURL()
                          echo repoUrl
-                         }
+                      }
 
                 }
         stage('send Message') {
            steps {
            echo "hy"
-           }
+
             sendCommentToPullRequest("message")
+              }
         }
 
 

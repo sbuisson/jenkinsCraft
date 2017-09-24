@@ -52,7 +52,7 @@ pipeline {
                 def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
                 echo '$SHA1'
 
-                httpRequest authentication: 'sbuisson-git', httpMode: 'GET',  url: 'https://api.github.com/sbuisson/jenkinsCraft/pulls/2/comments'
+                httpRequest authentication: 'sbuisson-git', httpMode: 'GET',  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/pulls/2/comments'
 
 
               /*  httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: '{\

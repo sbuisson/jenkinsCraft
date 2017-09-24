@@ -98,7 +98,6 @@ script {
                 println SHA1
                 script {
 
-
                       def message = """{
                            "body": "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}",
                            "commit_id": "$SHA1",

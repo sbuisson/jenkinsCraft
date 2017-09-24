@@ -68,9 +68,9 @@ pipeline {
 
                             echo "docker, baby!"
                             sh "pwd"
-                            sh "ls -lrt"
+                            sh "mvn -v"
                             sh 'mvn clean install'
-                          
+
                 }
                     sh "pwd"
                     sh "ls -lrt"
@@ -128,7 +128,7 @@ pipeline {
 
                                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                                     withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
-
+ sh "mvn -v"
                                         echo "sonar branch"
                                         echo "sonar branch"
                                         sh "mvn pitest:mutationCoverage \

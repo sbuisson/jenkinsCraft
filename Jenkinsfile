@@ -54,8 +54,7 @@ pipeline {
 
                 def response = httpRequest authentication: 'sbuisson-git', httpMode: 'GET',  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
 
-                println this
-                println this.context
+                println this.toString()
 
 def body="""{
                              "body": "Nice change",

@@ -59,13 +59,12 @@ pipeline {
                 echo "${WORKSPACE}"
 
 def body="""{
-                             "body": "Nice change $workspace2 $WORKSPACE",
+                             "body": "Nice work in <a href='${env.BUILD_URL}''>here </a> ",
                              "commit_id": "$SHA1",
                              "path": "/",
                              "position": 0
                          }"""
 
-                         println body
                 httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: body,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
 
                 }

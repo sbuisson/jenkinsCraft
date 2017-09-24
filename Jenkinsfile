@@ -10,7 +10,7 @@ void setBuildStatus(String url, String context, String message, String state, St
   ]);
 }
 
-def getRepoURL = {
+void getRepoURL() {
   sh "git config --get remote.origin.url"
   sh "git config --get remote.origin.url > originurl"
   def originurl = readFile("originurl").trim()
@@ -29,7 +29,7 @@ def getRepoURL = {
        def jsonObject = slurper.parseText(json.content)
        jsonObject.title
    }
-   def sendCommentToPullRequest(messageContent){
+   void sendCommentToPullRequest(messageContent){
 
          def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
@@ -48,7 +48,6 @@ def getRepoURL = {
 
 
 
-def repoUrl = "orignalRepoURL"
 pipeline {
     agent any
     stages {
@@ -56,6 +55,7 @@ pipeline {
         stage('Build') {
             steps {
 
+def repoUrl = getRepoURL()
                echo 'This is a minimal pipeline.'
             }
         }

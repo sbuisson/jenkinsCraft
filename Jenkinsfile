@@ -62,11 +62,9 @@ pipeline {
         }
 
         stage('docker') {
-            agent { label "dockerserver" }
             steps {
                 checkout scm
-                script {
-                    docker.image('maven:3.3.3-jdk-8').inside("-v  ${pwd()}/workspaceBis:/data") {
+                withDockerContainer(image:'maven:3.3.3-jdk-8', args"-v  ${pwd()}/workspaceBis:/data") {
                           stage('docker2') {
                             echo "docker, baby!"
                             sh "pwd"

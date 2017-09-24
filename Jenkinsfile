@@ -47,6 +47,7 @@ pipeline {
          stage('send Message') {
             steps {
 
+script{
                 def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
                 echo '$SHA1'
 
@@ -60,6 +61,7 @@ pipeline {
                     "position": 0\
                 }',  url: 'https://api.github.com/sbuisson/JenkinsCraft/Hello-World/pulls/1347/comments'
                 */
+                }
 
             }
         }

@@ -125,7 +125,7 @@ pipeline {
 
 
                                 echo "sonar branch ${env.GH_LOGIN}"
-
+ sh "mvn -v"
                                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                                     withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
  sh "mvn -v"

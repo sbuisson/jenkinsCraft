@@ -29,7 +29,21 @@ def getRepoURL = {
        def jsonObject = slurper.parseText(json.content)
        jsonObject.title
    }
+   def sendCommentToPullRequest(messageContent){
+         def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
+
+         def message="""{
+                                "body": messageContent,
+                                "commit_id": "$SHA1",
+                                "path": "/",
+                                "position": 0
+                            }"""
+         println message.body
+         httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
+
+
+   }
 
 
 
@@ -48,26 +62,9 @@ pipeline {
             steps {
 
                 script {
+                sendCommentToPullRequest("message")
 
-                def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
-                echo "$SHA1"
-
-                def response = httpRequest authentication: 'sbuisson-git', httpMode: 'GET',  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
-                sh 'pwd > workspace'
-                workspace2 = readFile('workspace').trim()
-                println workspace2
-                echo "${WORKSPACE}"
-
-def body="""{
-                             "body": "Nice work in <a href='${env.BUILD_URL}''>here </a> ",
-                             "commit_id": "$SHA1",
-                             "path": "/",
-                             "position": 0
-                         }"""
-
-                httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: body,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
-
-                }
+            }
 
             }
         }
@@ -162,6 +159,9 @@ def body="""{
                                             -Dsonar.host.url=http://sonarqube:9000 \
                                             -Dsonar.login=admin \
                                             -Dsonar.password=admin "
+
+
+                                            sendCommentToPullRequest("build ${env.BUILD_URL} ${env.BUILD_URL}")
                                     }
                     
                                 }

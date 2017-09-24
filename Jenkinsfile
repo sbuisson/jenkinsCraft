@@ -47,14 +47,16 @@ pipeline {
          stage('send Message') {
             steps {
 
-                def SHA1 =: sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+                def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
                 echo '$SHA1'
+
+                httpRequest authentication: 'sbuisson-git', httpMode: 'GET',  url: 'https://api.github.com/sbuisson/JenkinsCraft/Hello-World/pulls/1347/comments'
 
 
                 httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: '{
                     "body": "Nice change",
                     "commit_id": "$SHA1",
-                    "path": "file1.txt",
+                    "path": "./",
                     "position": 0
                 }',  url: 'https://api.github.com/sbuisson/JenkinsCraft/Hello-World/pulls/1347/comments'
 

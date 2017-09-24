@@ -188,17 +188,17 @@ script {
                             }
                         }
 
-                           def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+                        def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
 
-                                 def message="""{
-                                                        "body": "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}",
-                                                        "commit_id": "$SHA1",
-                                                        "path": "/",
-                                                        "position": 0
-                                                    }"""
-                                 println message.body
-                                 httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
+                        def message="""{
+                                                "body": "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}",
+                                                "commit_id": "$SHA1",
+                                                "path": "/",
+                                                "position": 0
+                                            }"""
+                        println message.body
+                        httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
 
 
 

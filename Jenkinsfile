@@ -60,14 +60,14 @@ pipeline {
             }
         }
 
-             stage('repoUrl') {
-                    steps {
+        stage('repoUrl') {
+            steps {
 
-                         def repoUrl = getRepoURL()
-                         echo repoUrl
-                      }
+                 def repoUrl = getRepoURL()
+                 echo repoUrl
+              }
 
-                }
+        }
         stage('send Message') {
            steps {
            echo "hy"

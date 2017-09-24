@@ -44,7 +44,15 @@ pipeline {
                echo 'This is a minimal pipeline.'
             }
         }
+         stage('Build2') {
+            steps {
 
+
+               echo 'This is also minimal pipeline.'
+
+
+            }
+        }
         stage('repoUrl') {
             steps {
 

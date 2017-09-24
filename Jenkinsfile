@@ -62,10 +62,11 @@ pipeline {
 
         stage('repoUrl') {
             steps {
-
+script {
                  def repoUrl = ''
                  repoUrl = getRepoURL()
                  echo repoUrl
+                 }
               }
 
         }

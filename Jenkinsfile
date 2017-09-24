@@ -94,9 +94,9 @@ script {
 
                 }
                 println "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
-
+                def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+                println SHA1
                 script {
-                     def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
 
                       def message = """{

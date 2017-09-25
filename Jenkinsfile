@@ -49,7 +49,7 @@ String getRepoURL() {
 
 
 node {
-    stages {
+
 
         stage('Build') {
             steps {
@@ -207,7 +207,8 @@ def messageContent="build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
                 }
 
             }
-        }
+
+
 
 }
 

@@ -69,6 +69,8 @@ script {
 
             sendCommentToPullRequest("message")
 
+              echo "message Send"
+
         }
 
 

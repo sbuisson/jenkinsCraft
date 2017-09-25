@@ -134,9 +134,9 @@ script {
                             }*/
                             checkout scm
                                  if ("master" == env.BRANCH_NAME) {
-                                    sh "mvn clean install site"
+                                    sh "mvn clean install"
                                 } else {
-                                    sh "mvn clean install site"
+                                    sh "mvn clean install"
 
                             }
                             archiveArtifacts artifacts: 'target/*.hpi'
@@ -158,7 +158,7 @@ script {
                                         echo "sonar branch"
                                         echo "sonar branch"
 
-                                        sh "mvn pitest:mutationCoverage \
+                                        sh "mvn mvn s \
                                             -Dsonar.host.url=http://sonarqube:9000\
                                             -Dsonar.analysis.mode=preview\
                                             -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
@@ -169,6 +169,7 @@ script {
                                             -Dsonar.host.url=http://sonarqube:9000 \
                                             -Dsonar.login=admin \
                                             -Dsonar.password=admin "
+                                        sh "mvn site"
 
                                         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
 

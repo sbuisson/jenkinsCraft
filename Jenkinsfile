@@ -31,9 +31,11 @@ String getRepoURL() {
    }
    void sendCommentToPullRequest(String messageContent){
          println "send CommentToPullRequest  "
-
-         def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
-
+def SHA1 ="SHA1"
+         script {
+          SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+         }
+         println SHA1
 
          def message = """{
                                 "body": messageContent,

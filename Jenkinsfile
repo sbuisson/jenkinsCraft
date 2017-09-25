@@ -38,15 +38,12 @@ String getRepoURL() {
          println "SHA1"
          println SHA1
          println "SHA1"+SHA1
-  println "message"
-         def message = ""{
-                                "body": "",
-                                "commit_id": "e",
-                                "path": "/",
+         println "message"
+         def message = ["body": messageContent, "commit_id": SHA1, "path": "/",
                                 "position": 0
-                            }"""
-  println "message"
-                            message.body=messageContent
+                            ]
+         println "message"
+
          println message.body
          httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
    println "sended CommentToPullRequest  "

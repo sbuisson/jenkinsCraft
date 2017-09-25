@@ -170,6 +170,12 @@ script {
                                             -Dsonar.login=admin \
                                             -Dsonar.password=admin "
 
+                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
+
+publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
+
+sendCommentToPullRequest( messageContent)
+
 
                                       }
                     
@@ -177,17 +183,6 @@ script {
                             }
                         }
 
-                        def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
-def messageContent="build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
-
-                        def message="""{
-                                                "body": messageContent,
-                                                "commit_id": "$SHA1",
-                                                "path": "/",
-                                                "position": 0
-                                            }"""
-                        println message.body
-                        httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
 
 
 

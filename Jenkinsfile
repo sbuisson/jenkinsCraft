@@ -96,11 +96,12 @@ script {
                 }
                 println "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
                 def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+                def messageContent = "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
                 println SHA1
                 script {
 
                       def message = """{
-                           "body": "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}",
+                           "body": messageContent,
                            "commit_id": "$SHA1",
                            "path": "/",
                            "position": 0
@@ -190,10 +191,10 @@ script {
                         }
 
                         def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
-
+def messageContent="build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
 
                         def message="""{
-                                                "body": "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}",
+                                                "body": messageContent,
                                                 "commit_id": "$SHA1",
                                                 "path": "/",
                                                 "position": 0

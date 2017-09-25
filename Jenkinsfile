@@ -36,7 +36,7 @@ String getRepoURL() {
 
          def message="""{
                                 "body": messageContent,
-                                "commit_id": "$SHA1",
+                                "commit_id": "e",
                                 "path": "/",
                                 "position": 0
                             }"""

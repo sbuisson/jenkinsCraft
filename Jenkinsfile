@@ -74,32 +74,13 @@ script {
                     withDockerContainer(image:'maven:3.3.3-jdk-8', args:"-v  ${pwd()}/workspaceBis:/data") {
 
                                 echo "docker, baby!"
-                                sh "pwd"
                                 sh "mvn -v"
-                                sh 'mvn clean install site'
+                                sh 'mvn clean install -B'
 
 
                     }
                 }
-                println "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
-                def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
-                def messageContent = "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
-                println SHA1
-                script {
-
-                      def message = """{
-                           "body": messageContent,
-                           "commit_id": "$SHA1",
-                           "path": "/",
-                           "position": 0
-                       }"""
-                      println message.body
-                      httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
-                   }
-
-
-
-
+              sendCommentToPullRequest( "build docker done")
 
         }
         stage('status') {
@@ -134,9 +115,9 @@ script {
                             }*/
                             checkout scm
                                  if ("master" == env.BRANCH_NAME) {
-                                    sh "mvn clean install"
+                                    sh "mvn clean install -B"
                                 } else {
-                                    sh "mvn clean install"
+                                    sh "mvn clean install -B"
 
                             }
                             archiveArtifacts artifacts: 'target/*.hpi'

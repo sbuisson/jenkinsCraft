@@ -83,6 +83,7 @@ script {
 
         stage('docker') {
             steps {
+                script{
                 checkout scm
                 withDockerContainer(image:'maven:3.3.3-jdk-8', args:"-v  ${pwd()}/workspaceBis:/data") {
 
@@ -108,7 +109,7 @@ script {
                       httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
                    }
 
-
+}
 
             }
 

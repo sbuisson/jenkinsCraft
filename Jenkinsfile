@@ -48,7 +48,7 @@ String getRepoURL() {
 
 
 
-pipeline {
+node {
     agent any
     stages {
 
@@ -117,17 +117,17 @@ script {
 
         }
         stage('status') {
-            steps {
+
                 echo "status for ${env.BRANCH_NAME.substring(3)}"
                 setBuildStatus("https://github.com/sbuisson/jenkinsCraft/", "ci/approve", "Aprove after testidsng", "PENDING", "")
 
 
-            }
+
         }
 
 
         stage('analyse') {
-            steps {
+
                 checkout scm
 
                 script {
@@ -209,6 +209,6 @@ def messageContent="build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
 
             }
         }
-    }
+
 }
 

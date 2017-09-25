@@ -139,6 +139,7 @@ script {
                                         echo "sonar branch"
                                         echo "sonar branch"
 
+                                       /*
                                         sh "mvn pitest:mutationCoverage  \
                                             -Dsonar.host.url=http://sonarqube:9000\
                                             -Dsonar.analysis.mode=preview\
@@ -149,7 +150,7 @@ script {
                                             sonar:sonar \
                                             -Dsonar.host.url=http://sonarqube:9000 \
                                             -Dsonar.login=admin \
-                                            -Dsonar.password=admin "
+                                            -Dsonar.password=admin "*/
                                         sh "mvn pitest:mutationCoverage"
                                         sh "mvn site"
 

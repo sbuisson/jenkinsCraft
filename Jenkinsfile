@@ -30,9 +30,9 @@ String getRepoURL() {
        jsonObject.title
    }
    void sendCommentToPullRequest(String messageContent){
-   echo "send CommentToPullRequest  "+messageContent
+         println "send CommentToPullRequest  "
 
-         def SHA1 = "e"//sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+         //def SHA1 = "e"//sh(returnStdout: true, script: "git rev-parse HEAD").trim()
 
 
          def message="""{
@@ -43,7 +43,7 @@ String getRepoURL() {
                             }"""
          println message.body
          httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
-   echo "sended CommentToPullRequest  "
+   println "sended CommentToPullRequest  "
 
    }
 

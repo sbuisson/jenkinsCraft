@@ -51,13 +51,6 @@ String getRepoURL() {
 node {
 
 
-        stage('Build') {
-            steps {
-
-
-               echo 'This is a minimal pipeline.'
-            }
-        }
 /*
         stage('repoUrl') {
             steps {
@@ -69,15 +62,14 @@ script {
 
               }
 
-        }*
+        }*/
         stage('send Message') {
-           steps {
+
            echo "hy"
 
             sendCommentToPullRequest("message")
-              }
+
         }
-*/
 
 
         stage('docker') {

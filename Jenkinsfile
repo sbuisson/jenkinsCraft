@@ -139,7 +139,7 @@ script {
                                         echo "sonar branch"
                                         echo "sonar branch"
 
-                                        sh "mvn mvn s \
+                                        sh "mvn pitest:mutationCoverage  s \
                                             -Dsonar.host.url=http://sonarqube:9000\
                                             -Dsonar.analysis.mode=preview\
                                             -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
@@ -156,10 +156,8 @@ script {
                                         archive "target/site/**/*"
 
                                         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
-
-publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
-
-sendCommentToPullRequest( messageContent)
+                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
+                                        sendCommentToPullRequest( messageContent)
 
 
                                       }

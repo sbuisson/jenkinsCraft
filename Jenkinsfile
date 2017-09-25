@@ -139,7 +139,7 @@ script {
                                         echo "sonar branch"
                                         echo "sonar branch"
 
-                                        sh "mvn pitest:mutationCoverage  s \
+                                        sh "mvn pitest:mutationCoverage  \
                                             -Dsonar.host.url=http://sonarqube:9000\
                                             -Dsonar.analysis.mode=preview\
                                             -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\

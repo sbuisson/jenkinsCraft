@@ -30,25 +30,13 @@ String getRepoURL() {
        jsonObject.title
    }
    void sendCommentToPullRequest(String messageContent){
-         println "send CommentToPullRequest  "
-            def SHA1 ="SHA1"
+
+         def SHA1 ="SHA1"
          script {
-          SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+            SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
          }
-         println "SHA1"
-         println SHA1
-         println "SHA1"+SHA1
-         println "message"
-         def message = ["body": messageContent, "commit_id": SHA1, "path": "/",
-                                "position": 0
-                            ]
-
-   println "message"
-   println "$message"
-
+         def message = """{"body": "$messageContent", "commit_id": "$SHA1", "path": "/", "position": 0}"""
          httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: "${message}",  url: "https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments"
-   println "sended CommentToPullRequest  "
-
    }
 
 
@@ -86,32 +74,13 @@ script {
                     withDockerContainer(image:'maven:3.3.3-jdk-8', args:"-v  ${pwd()}/workspaceBis:/data") {
 
                                 echo "docker, baby!"
-                                sh "pwd"
                                 sh "mvn -v"
-                                sh 'mvn clean install'
+                                sh 'mvn clean install -B'
 
 
                     }
                 }
-                println "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
-                def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
-                def messageContent = "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
-                println SHA1
-                script {
-
-                      def message = """{
-                           "body": messageContent,
-                           "commit_id": "$SHA1",
-                           "path": "/",
-                           "position": 0
-                       }"""
-                      println message.body
-                      httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
-                   }
-
-
-
-
+              sendCommentToPullRequest( "build docker done")
 
         }
         stage('status') {
@@ -146,12 +115,12 @@ script {
                             }*/
                             checkout scm
                                  if ("master" == env.BRANCH_NAME) {
-                                    sh "mvn clean install"
+                                    sh "mvn clean install -B"
                                 } else {
-                                    sh "mvn clean install"
+                                    sh "mvn clean install -B"
 
                             }
-                            archiveArtifacts artifacts: 'target/*.hpi'
+                           // archiveArtifacts artifacts: 'target/*.hpi'
                                 // step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
                             echo "sonar"
                             if ("master" == env.BRANCH_NAME) {
@@ -169,8 +138,9 @@ script {
  sh "mvn -v"
                                         echo "sonar branch"
                                         echo "sonar branch"
+     sh "mvn sonar:sonar -Dsonar.issuesreport.html.enable=true "
 
-                                        sh "mvn pitest:mutationCoverage \
+                                        sh "mvn pitest:mutationCoverage  \
                                             -Dsonar.host.url=http://sonarqube:9000\
                                             -Dsonar.analysis.mode=preview\
                                             -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
@@ -181,6 +151,14 @@ script {
                                             -Dsonar.host.url=http://sonarqube:9000 \
                                             -Dsonar.login=admin \
                                             -Dsonar.password=admin "
+                                       // sh "mvn pitest:mutationCoverage"
+                                        sh "mvn site"
+
+                                       // archive "target/site/**/*"
+
+                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'a'])
+                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'b'])
+                                        sendCommentToPullRequest( "fin"+pub)
 
 
                                       }
@@ -189,21 +167,16 @@ script {
                             }
                         }
 
-                        def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
-def messageContent="build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
-
-                        def message="""{
-                                                "body": messageContent,
-                                                "commit_id": "$SHA1",
-                                                "path": "/",
-                                                "position": 0
-                                            }"""
-                        println message.body
-                        httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
 
 
 
                 }
+
+            }
+
+            stage("archive"){
+
+
 
             }
 

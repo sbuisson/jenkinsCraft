@@ -150,7 +150,10 @@ script {
                                             -Dsonar.host.url=http://sonarqube:9000 \
                                             -Dsonar.login=admin \
                                             -Dsonar.password=admin "
+                                        sh "mvn pitest:mutationCoverage"
                                         sh "mvn site"
+
+                                        archive "target/site/**/*"
 
                                         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
 
@@ -169,6 +172,12 @@ sendCommentToPullRequest( messageContent)
 
 
                 }
+
+            }
+
+            stage("archive"){
+
+
 
             }
 

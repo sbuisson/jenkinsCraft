@@ -44,8 +44,9 @@ String getRepoURL() {
                             ]
 
    println "message"
+   println message
 
-         httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
+         httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: "${message}",  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
    println "sended CommentToPullRequest  "
 
    }

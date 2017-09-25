@@ -49,7 +49,6 @@ String getRepoURL() {
 
 
 node {
-    agent any
     stages {
 
         stage('Build') {

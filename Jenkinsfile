@@ -39,9 +39,9 @@ String getRepoURL() {
          println SHA1
          println "SHA1"+SHA1
          println "message"
-         def message = ["body": "$messageContent", "commit_id": "$SHA1", "path": "/",
+         def message = """{"body": "$messageContent", "commit_id": "$SHA1", "path": "/",
                                 "position": 0
-                            ]
+                            }"""
 
    println "message"
    println "$message"

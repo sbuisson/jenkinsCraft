@@ -30,25 +30,13 @@ String getRepoURL() {
        jsonObject.title
    }
    void sendCommentToPullRequest(String messageContent){
-         println "send CommentToPullRequest  "
-            def SHA1 ="SHA1"
+
+         def SHA1 ="SHA1"
          script {
-          SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
+            SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
          }
-         println "SHA1"
-         println SHA1
-         println "SHA1"+SHA1
-         println "message"
-         def message = """{"body": "$messageContent", "commit_id": "$SHA1", "path": "/",
-                                "position": 0
-                            }"""
-
-   println "message"
-   println "$message"
-
+         def message = """{"body": "$messageContent", "commit_id": "$SHA1", "path": "/", "position": 0}"""
          httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: "${message}",  url: "https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments"
-   println "sended CommentToPullRequest  "
-
    }
 
 
@@ -88,7 +76,7 @@ script {
                                 echo "docker, baby!"
                                 sh "pwd"
                                 sh "mvn -v"
-                                sh 'mvn clean install'
+                                sh 'mvn clean install site'
 
 
                     }
@@ -146,9 +134,9 @@ script {
                             }*/
                             checkout scm
                                  if ("master" == env.BRANCH_NAME) {
-                                    sh "mvn clean install"
+                                    sh "mvn clean install site"
                                 } else {
-                                    sh "mvn clean install"
+                                    sh "mvn clean install site"
 
                             }
                             archiveArtifacts artifacts: 'target/*.hpi'

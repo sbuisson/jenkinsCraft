@@ -82,18 +82,18 @@ script {
 
 
         stage('docker') {
-            steps {
+
                 script{
-                checkout scm
-                withDockerContainer(image:'maven:3.3.3-jdk-8', args:"-v  ${pwd()}/workspaceBis:/data") {
+                    checkout scm
+                    withDockerContainer(image:'maven:3.3.3-jdk-8', args:"-v  ${pwd()}/workspaceBis:/data") {
 
-                            echo "docker, baby!"
-                            sh "pwd"
-                            sh "mvn -v"
-                            sh 'mvn clean install'
+                                echo "docker, baby!"
+                                sh "pwd"
+                                sh "mvn -v"
+                                sh 'mvn clean install'
 
 
-                }
+                    }
                 }
                 println "build ${env.BUILD_URL} ${env.BUILD_URL} ${env.NODE_NAME}"
                 def SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
@@ -111,9 +111,9 @@ script {
                       httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: message,  url: 'https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments'
                    }
 
-}
 
-            
+
+
 
         }
         stage('status') {

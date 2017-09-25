@@ -156,8 +156,8 @@ script {
 
                                         archive "target/site/**/*"
 
-                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
-                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
+                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
+                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
                                         sendCommentToPullRequest( messageContent)
 
 

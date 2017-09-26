@@ -158,7 +158,7 @@ script {
 
                                         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'a'])
                                         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'b'])
-                                        sendCommentToPullRequest( "fin"+pub)
+                                        sendCommentToPullRequest( "fin <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/PR-2/131/artifact/target/site/index.html'>report</a>")
 
 
                                       }

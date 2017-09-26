@@ -138,7 +138,7 @@ script {
  sh "mvn -v"
                                         echo "sonar branch"
                                         echo "sonar branch"
-     sh "mvn sonar:sonar -Dsonar.issuesreport.html.enable=true "
+     sh "mvn sonar:sonar -Dsonar.issuesreport.html.enable=true -Dsonar.host.url=http://sonarqube:9000"
 
                                         sh "mvn pitest:mutationCoverage  \
                                             -Dsonar.host.url=http://sonarqube:9000\

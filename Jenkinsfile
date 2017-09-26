@@ -138,7 +138,7 @@ script {
  sh "mvn -v"
                                         echo "sonar branch"
                                         echo "sonar branch"
-
+     sh "mvn sonar:sonar -Dsonar.issuesreport.html.enable=true "
 
                                         sh "mvn pitest:mutationCoverage  \
                                             -Dsonar.host.url=http://sonarqube:9000\
@@ -156,8 +156,8 @@ script {
 
                                        // archive "target/site/**/*"
 
-                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
-                                        def pub=publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
+                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'a'])
+                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'b'])
                                         sendCommentToPullRequest( "fin"+pub)
 
 

@@ -120,7 +120,7 @@ script {
                                     sh "mvn clean install -B"
 
                             }
-                            archiveArtifacts artifacts: 'target/*.hpi'
+                           // archiveArtifacts artifacts: 'target/*.hpi'
                                 // step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
                             echo "sonar"
                             if ("master" == env.BRANCH_NAME) {
@@ -154,7 +154,7 @@ script {
                                        // sh "mvn pitest:mutationCoverage"
                                         sh "mvn site"
 
-                                        archive "target/site/**/*"
+                                       // archive "target/site/**/*"
 
                                         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])
                                         def pub=publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: ''])

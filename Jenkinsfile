@@ -126,21 +126,24 @@ script {
                             if ("master" == env.BRANCH_NAME) {
                                 withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
                                     echo "sonar master"
-                                    sh "mvn -Dsonar.host.url=http://sonarqube:9000 sonar:sonar"
-                                }
+                                          sh "mvn -Dsonar.host.url=http://sonarqube:9000 sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin"
+
+                               }
                             } else {
 
 
-                                echo "sonar branch ${env.GH_LOGIN}"
 
                                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                                     withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
  sh "mvn -v"
                                         echo "sonar branch"
-                                        echo "sonar branch"
-     sh "mvn sonar:sonar -Dsonar.issuesreport.html.enable=true -Dsonar.host.url=http://sonarqube:9000"
+      sh "mvn -Dsonar.host.url=http://sonarqube:9000 sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin"
 
-                                        sh "mvn pitest:mutationCoverage  \
+
+                                echo "sonar branch ${env.GH_LOGIN}"
+  //   sh "mvn sonar:sonar -Dsonar.issuesreport.html.enable=true -Dsonar.host.url=http://sonarqube:9000"
+
+                                        def mvnQuery= "mvn pitest:mutationCoverage  \
                                             -Dsonar.host.url=http://sonarqube:9000\
                                             -Dsonar.analysis.mode=preview\
                                             -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
@@ -151,6 +154,8 @@ script {
                                             -Dsonar.host.url=http://sonarqube:9000 \
                                             -Dsonar.login=admin \
                                             -Dsonar.password=admin "
+                                            echo mvnQuery
+                                            sh mvnQuery
                                        // sh "mvn pitest:mutationCoverage"
                                         sh "mvn site"
 

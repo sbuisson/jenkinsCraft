@@ -137,7 +137,7 @@ script {
                                     withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
  sh "mvn -v"
                                         echo "sonar branch"
-      sh "mvn -Dsonar.host.url=http://sonarqube:9000 sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin"
+      sh "mvn sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin"
 
 
                                 echo "sonar branch ${env.GH_LOGIN}"

@@ -137,11 +137,11 @@ script {
                                     withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
  sh "mvn -v"
                                         echo "sonar branch"
-      sh "mvn sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.host.url=http://sonarqube:9000"
+      sh "mvn sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.host.url=http://sonarqube:9000  -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci"
 
 
                                 echo "sonar branch ${env.GH_LOGIN}"
-     sh "mvn sonar:sonar -Dsonar.issuesreport.html.enable=true -Dsonar.host.url=http://sonarqube:9000"
+     //sh "mvn sonar:sonar -Dsonar.issuesreport.html.enable=true -Dsonar.host.url=http://sonarqube:9000"
 
                                         def mvnQuery= "mvn pitest:mutationCoverage  \
                                             -Dsonar.host.url=http://sonarqube:9000\
@@ -150,6 +150,7 @@ script {
                                             -Dsonar.github.repository=sbuisson/jenkinsCraft \
                                             -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} \
                                             -Dsonar.github.oauth=${env.OATH} -Dsonar.pitest.mode=reuseReport \
+                                             -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci \
                                             sonar:sonar \
                                             -Dsonar.host.url=http://sonarqube:9000 \
                                             -Dsonar.login=admin \

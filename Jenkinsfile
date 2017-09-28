@@ -131,15 +131,14 @@ script {
                                 echo "sonar branch"
                                 sh "mvn sonar:sonar $sonarParam $databaseSonarParam"
                                 echo "sonar branch ${env.GH_LOGIN}"
-
-                                def mvnQuery= "mvn pitest:mutationCoverage  \
-                                   $sonarParam $databaseSonarParam" \
-                                    -Dsonar.analysis.mode=preview\
-                                    -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
+                                def githubSonarParam="-Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
                                     -Dsonar.github.repository=sbuisson/jenkinsCraft \
                                     -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} \
-                                    -Dsonar.github.oauth=${env.OATH} -Dsonar.pitest.mode=reuseReport \
-                                    sonar:sonar ";
+                                    -Dsonar.github.oauth=${env.OATH} "
+
+                                def mvnQuery= "mvn pitest:mutationCoverage  sonar:sonar \
+                                   $sonarParam $databaseSonarParam $githubSonarParam \
+                                    -Dsonar.analysis.mode=preview -Dsonar.pitest.mode=reuseReport"
                                 sh mvnQuery
 
                                 archive "target/sonar/**/*"

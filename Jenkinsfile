@@ -111,9 +111,9 @@ script {
                                     sh "mvn clean install -B"
 
                                 }
-                                sh pwd
+                                sh "pwd"
                             }
-                    sh ls
+                    sh "ls"
                     def databaseSonarParam = " -Dsonar.jdbc.username=ci_user -Dsonar.jdbc.password=ci "
                     def sonarParam = " -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=admin -Dsonar.password=admin "
 

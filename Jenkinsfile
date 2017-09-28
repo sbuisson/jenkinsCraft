@@ -99,6 +99,8 @@ script {
 
                 script {
                     sh "mvn -v"
+                       sh "mvn sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.host.url=http://sonarqube:9000  -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci -Dsonar.jdbc.url=jdbc:postgresql://postgres:5432/ci"
+
                     docker
                         .image('maven:3.3.3-jdk-8')
                         .inside("-v  ${pwd()}/workspaceTer:/data --link=sonarqube:sonarqube") {

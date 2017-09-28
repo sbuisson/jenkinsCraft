@@ -55,7 +55,7 @@ script {
 
               }
 
-        }*/
+        }
         stage('send Message') {
 
            echo "hy"
@@ -65,7 +65,7 @@ script {
               echo "message Send"
 
         }
-
+*/
 
         stage('docker') {
 

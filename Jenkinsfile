@@ -126,7 +126,7 @@ script {
                             if ("master" == env.BRANCH_NAME) {
                                 withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
                                     echo "sonar master"
-                                          sh "mvn -Dsonar.host.url=http://sonarqube:9000 sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin"
+                                          sh "mvn -Dsonar.host.url=http://sonarqube:9000 sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci"
 
                                }
                             } else {

@@ -114,46 +114,39 @@ script {
                                 sh pwd
                             }
 
-                 //   sh "mvn sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.host.url=http://sonarqube:9000  -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci -Dsonar.jdbc.url=jdbc:postgresql://postgres:5432/ci"
                     def databaseSonarParam = " -Dsonar.jdbc.username=ci_user -Dsonar.jdbc.password=ci "
                     def sonarParam = " -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=admin -Dsonar.password=admin "
-                           // archiveArtifacts artifacts: 'target/*.hpi'
-                                // step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
-                            echo "sonar"
+
+                    echo "sonar"
                     if ("master" == env.BRANCH_NAME) {
-                                withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
-                                    echo "sonar master"
-                                          sh "mvn sonar:sonar $sonarParam $databaseSonarParam"
+                        withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
+                            echo "sonar master"
+                                  sh "mvn sonar:sonar $sonarParam $databaseSonarParam"
 
-                               }
+                        }
                     } else {
-
-
-
-                                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
-                                    withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
- sh "mvn -v"
-                                        echo "sonar branch"
-      sh "mvn sonar:sonar $sonarParam $databaseSonarParam"
-
-
+                        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
+                            withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
+                                sh "mvn -v"
+                                echo "sonar branch"
+                                sh "mvn sonar:sonar $sonarParam $databaseSonarParam"
                                 echo "sonar branch ${env.GH_LOGIN}"
 
-                                        def mvnQuery= "mvn pitest:mutationCoverage  \
-                                           $sonarParam $databaseSonarParam" \
-                                            -Dsonar.analysis.mode=preview\
-                                            -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
-                                            -Dsonar.github.repository=sbuisson/jenkinsCraft \
-                                            -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} \
-                                            -Dsonar.github.oauth=${env.OATH} -Dsonar.pitest.mode=reuseReport \
-                                            sonar:sonar "
+                                def mvnQuery= "mvn pitest:mutationCoverage  \
+                                   $sonarParam $databaseSonarParam" \
+                                    -Dsonar.analysis.mode=preview\
+                                    -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
+                                    -Dsonar.github.repository=sbuisson/jenkinsCraft \
+                                    -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} \
+                                    -Dsonar.github.oauth=${env.OATH} -Dsonar.pitest.mode=reuseReport \
+                                    sonar:sonar ";
+                                sh mvnQuery
 
+                                archive "target/sonar/**/*"
 
-                                        archive "target/sonar/**/*"
-
-                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'a'])
-                                        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'b'])
-                                        sendCommentToPullRequest( "fin <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/PR-2/131/artifact/target/site/index.html'>report</a>")
+                                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'a'])
+                                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'b'])
+                                sendCommentToPullRequest( "fin <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/PR-2/131/artifact/target/site/index.html'>report</a>")
 
 
                                       }

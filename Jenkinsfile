@@ -99,39 +99,34 @@ script {
 
                 script {
                     sh "mvn -v"
-                       sh "mvn sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.host.url=http://sonarqube:9000  -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci -Dsonar.jdbc.url=jdbc:postgresql://postgres:5432/ci"
 
                     docker
                         .image('maven:3.3.3-jdk-8')
-                        .inside("-v  ${pwd()}/workspaceTer:/data --link=sonarqube:sonarqube") {
+                        .inside("-v ./workspaceTer:/data") {
 
-
-                            // Set job description with PR title
-                            /* if (env.BRANCH_NAME.startsWith('PR')) {
-                                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
-                                    def resp = httpRequest url: "https://api.github.com/repos/sbuisson/jenkinsCraft/pulls/${env.BRANCH_NAME.substring(3)}", customHeaders: [[name: 'Authorization', value: "token ${env.GH_PASSWORD}"]]
-                                    def ttl = getTitle(resp)
-                                    def itm = getItem(env.BRANCH_NAME)
-                                    itm.setDisplayName("PR-${env.BRANCH_NAME.substring(3)} '${ttl}'")
-                                }
-                            }*/
                             checkout scm
                                  if ("master" == env.BRANCH_NAME) {
                                     sh "mvn clean install -B"
                                 } else {
                                     sh "mvn clean install -B"
 
+                                }
+                                sh pwd
                             }
+
+                 //   sh "mvn sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.host.url=http://sonarqube:9000  -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci -Dsonar.jdbc.url=jdbc:postgresql://postgres:5432/ci"
+                    def databaseSonarParam = " -Dsonar.jdbc.username=ci_user -Dsonar.jdbc.password=ci "
+                    def sonarParam = " -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=admin -Dsonar.password=admin "
                            // archiveArtifacts artifacts: 'target/*.hpi'
                                 // step([$class: 'Publisher', reportFilenamePattern: '**/testng-results.xml'])
                             echo "sonar"
-                            if ("master" == env.BRANCH_NAME) {
+                    if ("master" == env.BRANCH_NAME) {
                                 withEnv(["PATH+MAVEN=${tool name: 'Maven 3', type: 'hudson.tasks.Maven$MavenInstallation'}/bin"]) {
                                     echo "sonar master"
-                                          sh "mvn -Dsonar.host.url=http://sonarqube:9000 sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci"
+                                          sh "mvn sonar:sonar $sonarParam $databaseSonarParam"
 
                                }
-                            } else {
+                    } else {
 
 
 
@@ -139,32 +134,22 @@ script {
                                     withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
  sh "mvn -v"
                                         echo "sonar branch"
-      sh "mvn sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.host.url=http://sonarqube:9000  -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci -Dsonar.jdbc.url=jdbc:postgresql://postgres:5432/ci"
+      sh "mvn sonar:sonar $sonarParam $databaseSonarParam"
 
 
                                 echo "sonar branch ${env.GH_LOGIN}"
-     //sh "mvn sonar:sonar -Dsonar.issuesreport.html.enable=true -Dsonar.host.url=http://sonarqube:9000"
 
                                         def mvnQuery= "mvn pitest:mutationCoverage  \
-                                            -Dsonar.host.url=http://sonarqube:9000\
+                                           $sonarParam $databaseSonarParam" \
                                             -Dsonar.analysis.mode=preview\
                                             -Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
                                             -Dsonar.github.repository=sbuisson/jenkinsCraft \
                                             -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} \
                                             -Dsonar.github.oauth=${env.OATH} -Dsonar.pitest.mode=reuseReport \
-                                             -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci \
-                                            sonar:sonar \
-                                            -Dsonar.host.url=http://sonarqube:9000 \
-                                            -Dsonar.login=admin \
-                                            -Dsonar.password=admin \
-                                             -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci -Dsonar.jdbc.url=jdbc:postgresql://postgres:5432/ci "
+                                            sonar:sonar "
 
-                                            echo mvnQuery
-                                            sh mvnQuery
-                                       // sh "mvn pitest:mutationCoverage"
-                                        sh "mvn site"
 
-                                       // archive "target/site/**/*"
+                                        archive "target/sonar/**/*"
 
                                         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'a'])
                                         publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'b'])
@@ -173,7 +158,7 @@ script {
 
                                       }
                     
-                                }
+
                             }
                         }
 

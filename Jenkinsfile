@@ -137,7 +137,7 @@ script {
                                     withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
  sh "mvn -v"
                                         echo "sonar branch"
-      sh "mvn sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.host.url=http://sonarqube:9000  -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci"
+      sh "mvn sonar:sonar  -Dsonar.login=admin  -Dsonar.password=admin -Dsonar.host.url=http://sonarqube:9000  -Dsonar.password=admin -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci -Dsonar.jdbc.url=jdbc:postgresql://postgres:5432/ci"
 
 
                                 echo "sonar branch ${env.GH_LOGIN}"
@@ -154,7 +154,9 @@ script {
                                             sonar:sonar \
                                             -Dsonar.host.url=http://sonarqube:9000 \
                                             -Dsonar.login=admin \
-                                            -Dsonar.password=admin "
+                                            -Dsonar.password=admin \
+                                             -Dsonar.jdbc.username=ci -Dsonar.jdbc.password=ci -Dsonar.jdbc.url=jdbc:postgresql://postgres:5432/ci "
+
                                             echo mvnQuery
                                             sh mvnQuery
                                        // sh "mvn pitest:mutationCoverage"

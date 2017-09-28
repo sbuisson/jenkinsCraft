@@ -12,5 +12,8 @@ public class Main {
         if(i<5){
             i++;
         }
+        if(false){
+            i--;
+        }
     }
 }

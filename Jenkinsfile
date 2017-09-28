@@ -102,7 +102,7 @@ script {
 
                     docker
                         .image('maven:3.3.3-jdk-8')
-                        .inside("-v ./workspaceTer:/data") {
+                        .inside("-v workspaceTer:/data") {
 
                             checkout scm
                                  if ("master" == env.BRANCH_NAME) {

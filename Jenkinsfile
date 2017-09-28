@@ -101,7 +101,7 @@ script {
                     sh "mvn -v"
                     docker
                         .image('maven:3.3.3-jdk-8')
-                        .inside("-v  ${pwd()}/workspaceTer:/data") {
+                        .inside("-v  ${pwd()}/workspaceTer:/data --link sonarqube:sonarqube") {
 
 
                             // Set job description with PR title

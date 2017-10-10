@@ -65,7 +65,7 @@ script {
               echo "message Send"
 
         }
-*/
+
 
         stage('docker') {
 
@@ -83,6 +83,7 @@ script {
               sendCommentToPullRequest( "build docker done")
 
         }
+        */
         stage('status') {
 
                 echo "status for ${env.BRANCH_NAME.substring(3)}"
@@ -98,7 +99,7 @@ script {
                 checkout scm
 
                 script {
-                    sh "mvn -v"
+                  /*  sh "mvn -v"
 
                     docker
                         .image('maven:3.3.3-jdk-8')
@@ -113,7 +114,7 @@ script {
                                 }
                                 sh "pwd"
                             }
-                    sh "ls"
+                    sh "ls"*/
                     def databaseSonarParam = " -Dsonar.jdbc.username=ci_user -Dsonar.jdbc.password=ci -Dsonar.jdbc.url=jdbc:postgresql://postgres:5432/ci "
                     def sonarParam = " -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=admin -Dsonar.password=admin "
 
@@ -136,29 +137,29 @@ script {
                                     -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} \
                                     -Dsonar.github.oauth=${env.OATH} "
 
-   sendCommentToPullRequest( "son1")
-echo "son1"
+                                sendCommentToPullRequest( "son1")
+                                echo "son1"
                                 def mvnQuery1= "mvn pitest:mutationCoverage  sonar:sonar \
                                    $sonarParam $databaseSonarParam $githubSonarParam \
-                                    -Dsonar.analysis.mode=incremental -Dsonar.pitest.mode=reuseReport"
+                                    -Dsonar.analysis.mode=incremental -Dsonar.pitest.mode=reuseReport -B "
                                 sh mvnQuery1
 
-   sendCommentToPullRequest( "son2")
-echo "son2"
- def mvnQuery2= "mvn sonar:sonar \
+                                sendCommentToPullRequest( "son2")
+                                echo "son2"
+                                def mvnQuery2= "mvn sonar:sonar \
                                    $sonarParam $databaseSonarParam $githubSonarParam \
-                                    -Dsonar.analysis.mode=incremental"
+                                    -Dsonar.analysis.mode=incremental -B "
                                        sh mvnQuery2
 
 
-   sendCommentToPullRequest( "son3")
-   echo "son3"
- def mvnQuery3= "mvn sonar:sonar \
+                                sendCommentToPullRequest( "son3")
+                                echo "son3"
+                                def mvnQuery3= "mvn sonar:sonar \
                                    $sonarParam $githubSonarParam \
-                                    -Dsonar.analysis.mode=incremental"
+                                    -Dsonar.analysis.mode=incremental -B "
 
                                 sh mvnQuery3
-                                   sendCommentToPullRequest( "fin ${env.JOB_NAME} <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/${env.BRANCH_NAME}/${env.BUILD_NUMBER}/artifact/target/sonar/sonar-report.json'>report</a>")
+                                sendCommentToPullRequest( "fin ${env.JOB_NAME} <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/${env.BRANCH_NAME}/${env.BUILD_NUMBER}/artifact/target/sonar/sonar-report.json'>report</a>")
 
                             //    archive "target/sonar/**/*"
                               //  archive "target/pitest/**/*"

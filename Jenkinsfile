@@ -137,14 +137,14 @@ script {
                                     -Dsonar.github.oauth=${env.OATH} "
 
    sendCommentToPullRequest( "son1")
-
+echo "son1"
                                 def mvnQuery1= "mvn pitest:mutationCoverage  sonar:sonar \
                                    $sonarParam $databaseSonarParam $githubSonarParam \
                                     -Dsonar.analysis.mode=incremental -Dsonar.pitest.mode=reuseReport"
                                 sh mvnQuery1
 
    sendCommentToPullRequest( "son2")
-
+echo "son2"
  def mvnQuery2= "mvn sonar:sonar \
                                    $sonarParam $databaseSonarParam $githubSonarParam \
                                     -Dsonar.analysis.mode=incremental"
@@ -152,6 +152,7 @@ script {
 
 
    sendCommentToPullRequest( "son3")
+   echo "son3"
  def mvnQuery3= "mvn sonar:sonar \
                                    $sonarParam $githubSonarParam \
                                     -Dsonar.analysis.mode=incremental"

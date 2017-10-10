@@ -138,32 +138,33 @@ script {
 
    sendCommentToPullRequest( "son1")
 
-                                def mvnQuery= "mvn pitest:mutationCoverage  sonar:sonar \
+                                def mvnQuery1= "mvn pitest:mutationCoverage  sonar:sonar \
                                    $sonarParam $databaseSonarParam $githubSonarParam \
                                     -Dsonar.analysis.mode=incremental -Dsonar.pitest.mode=reuseReport"
-                                sh mvnQuery
+                                sh mvnQuery1
 
    sendCommentToPullRequest( "son2")
 
- def mvnQuery= "mvn sonar:sonar \
+ def mvnQuery2= "mvn sonar:sonar \
                                    $sonarParam $databaseSonarParam $githubSonarParam \
                                     -Dsonar.analysis.mode=incremental"
+                                       sh mvnQuery2
 
 
    sendCommentToPullRequest( "son3")
- def mvnQuery= "mvn sonar:sonar \
+ def mvnQuery3= "mvn sonar:sonar \
                                    $sonarParam $githubSonarParam \
                                     -Dsonar.analysis.mode=incremental"
 
-                                sh mvnQuery
+                                sh mvnQuery3
                                    sendCommentToPullRequest( "fin ${env.JOB_NAME} <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/${env.BRANCH_NAME}/${env.BUILD_NUMBER}/artifact/target/sonar/sonar-report.json'>report</a>")
 
-                                archive "target/sonar/**/*"
-                                archive "target/pitest/**/*"
-                                archive "target/site/**/*"
+                            //    archive "target/sonar/**/*"
+                              //  archive "target/pitest/**/*"
+                                //archive "target/site/**/*"
 
-                              //  publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'a'])
-                                //publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'b'])
+                                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'a'])
+                                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: 'index.html', reportName: 'HTML site', reportTitles: 'b'])
                                 sendCommentToPullRequest( "fin ${env.JOB_NAME} <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/${env.BRANCH_NAME}/${env.BUILD_NUMBER}/artifact/target/sonar/sonar-report.json'>report</a>")
 
 

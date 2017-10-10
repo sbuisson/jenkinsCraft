@@ -141,14 +141,14 @@ script {
                                 echo "son1"
                                 def mvnQuery1= "mvn pitest:mutationCoverage  sonar:sonar \
                                    $sonarParam $databaseSonarParam $githubSonarParam \
-                                    -Dsonar.analysis.mode=incremental -Dsonar.pitest.mode=reuseReport -B "
+                                    -Dsonar.analysis.mode=preview -Dsonar.pitest.mode=reuseReport -B "
                                 sh mvnQuery1
 
                                 sendCommentToPullRequest( "son2")
                                 echo "son2"
                                 def mvnQuery2= "mvn sonar:sonar \
                                    $sonarParam $databaseSonarParam $githubSonarParam \
-                                    -Dsonar.analysis.mode=incremental -B "
+                                    -Dsonar.analysis.mode=preview -B "
                                        sh mvnQuery2
 
 
@@ -156,7 +156,7 @@ script {
                                 echo "son3"
                                 def mvnQuery3= "mvn sonar:sonar \
                                    $sonarParam $githubSonarParam \
-                                    -Dsonar.analysis.mode=incremental -B "
+                                    -Dsonar.analysis.mode=preview -B "
 
                                 sh mvnQuery3
                                 sendCommentToPullRequest( "fin ${env.JOB_NAME} <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/${env.BRANCH_NAME}/${env.BUILD_NUMBER}/artifact/target/sonar/sonar-report.json'>report</a>")

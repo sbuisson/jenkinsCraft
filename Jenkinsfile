@@ -136,10 +136,27 @@ script {
                                     -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} \
                                     -Dsonar.github.oauth=${env.OATH} "
 
+   sendCommentToPullRequest( "son1")
+
                                 def mvnQuery= "mvn pitest:mutationCoverage  sonar:sonar \
                                    $sonarParam $databaseSonarParam $githubSonarParam \
-                                    -Dsonar.analysis.mode=preview -Dsonar.pitest.mode=reuseReport"
+                                    -Dsonar.analysis.mode=incremental -Dsonar.pitest.mode=reuseReport"
                                 sh mvnQuery
+
+   sendCommentToPullRequest( "son2")
+
+ def mvnQuery= "mvn sonar:sonar \
+                                   $sonarParam $databaseSonarParam $githubSonarParam \
+                                    -Dsonar.analysis.mode=incremental"
+
+
+   sendCommentToPullRequest( "son3")
+ def mvnQuery= "mvn sonar:sonar \
+                                   $sonarParam $githubSonarParam \
+                                    -Dsonar.analysis.mode=incremental"
+
+                                sh mvnQuery
+                                   sendCommentToPullRequest( "fin ${env.JOB_NAME} <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/${env.BRANCH_NAME}/${env.BUILD_NUMBER}/artifact/target/sonar/sonar-report.json'>report</a>")
 
                                 archive "target/sonar/**/*"
                                 archive "target/pitest/**/*"

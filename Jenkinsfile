@@ -56,10 +56,11 @@ node {
 
         if ("master" == env.BRANCH_NAME) {
             echo "sonar master"
-            sh "mvn sonar:sonar -Dsonar.analysis.mode=issue $sonarParam $databaseSonarParam  -B "
+            sh "mvn sonar:sonar -Dsonar.analysis.mode=issues $sonarParam $databaseSonarParam  -B "
         } else if(!env.BRANCH_NAME.startsWith("PR-")){
             echo "sonar branch ${env.BRANCH_NAME}"
-            sh "mvn sonar:sonar -Dsonar.analysis.mode=issue $sonarParam $databaseSonarParam  -B "
+            sh "mvn sonar:sonar -Dsonar.analysis.mode=issues $sonarParam $databaseSonarParam  -B "
+            sh "mvn sonar:sonar -Dsonar.analysis.mode=issues $sonarParam $databaseSonarParam  -B "
         } else {
 
 

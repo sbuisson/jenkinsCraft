@@ -80,7 +80,7 @@ node {
                     messagePR+="rapport sonar : <a href='http://localhost:9000/jenkinscraft'>here</a> <br/>"
 
                     echo "metrics pitest"
-                    sh "mvn pitest:scmCodeCoverage -B"
+                    sh "mvn pitest:scmMutationCoverage -B"
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: '*', reportName: 'pitest', reportTitles: 'pitest'])
                     messagePR+="rapport pitest : <a href='${jenkinsJobUrl}/site/pitest/index.html'>here</a> <br/>"
 

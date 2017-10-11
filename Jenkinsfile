@@ -55,9 +55,17 @@ node {
 
         if ("master" == env.BRANCH_NAME) {
             echo "sonar master"
-            sh "mvn sonar:sonar $sonarParam $databaseSonarParam -B "
+            sh "mvn sonar:sonar -Dsonar.analysis.mode=issue $sonarParam $databaseSonarParam  -B "
+        } else if(!env.BRANCH_NAME.startWith("PR-"){
+            echo "sonar branch ${env.BRANCH_NAME}"
+            sh "mvn sonar:sonar -Dsonar.analysis.mode=issue $sonarParam $databaseSonarParam  -B "
         } else {
+
+
             def messagePR=""
+
+
+
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                 withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
                     def githubSonarParam="-Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
@@ -65,7 +73,7 @@ node {
                                                         -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} \
                                                         -Dsonar.github.oauth=${env.OATH} "
 
-                    sh "mvn sonar:sonar $sonarParam $databaseSonarParam $githubSonarParam -B"
+                    sh "mvn sonar:sonar -Dsonar.analysis.mode=preview $sonarParam $databaseSonarParam $githubSonarParam -B"
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/sonar', reportFiles: '*', reportName: 'sonar', reportTitles: 'sonar'])
                     messagePR+="rapport sonar : <a href="htttp://localhost:9000/jenkinscraft">here</a> <br/>"
 

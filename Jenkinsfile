@@ -29,7 +29,7 @@ def getTitle(json) {
    def jsonObject = slurper.parseText(json.content)
    jsonObject.title
 }
-void sendCommentToPullRequest(String messageContent){
+void sendCommentToPullRequest(String prId, String messageContent){
 
      def SHA1 ="SHA1"
      script {
@@ -37,7 +37,7 @@ void sendCommentToPullRequest(String messageContent){
      }
 
      def message = """{"body": "$messageContent", "commit_id": "$SHA1", "path": "/", "position": 0}"""
-     httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: "${message}",  url: "https://api.github.com/repos/sbuisson/jenkinsCraft/issues/2/comments"
+     httpRequest authentication: 'sbuisson-git', httpMode: 'POST', requestBody: "${message}",  url: "https://api.github.com/repos/sbuisson/jenkinsCraft/issues/${prId}/comments"
 }
 
 
@@ -63,12 +63,13 @@ node {
 
 
             def messagePR=""
+            def prId="${env.BRANCH_NAME.substring(3)
 
 
 
             withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sbuisson-git', usernameVariable: 'GH_LOGIN', passwordVariable: 'GH_PASSWORD']]) {
                 withCredentials([[$class: 'StringBinding', credentialsId: ' git-token', variable: 'OATH']]) {
-                    def githubSonarParam="-Dsonar.github.pullRequest=${env.BRANCH_NAME.substring(3)}\
+                    def githubSonarParam="-Dsonar.github.pullRequest=${prId}\
                                                         -Dsonar.github.repository=sbuisson/jenkinsCraft \
                                                         -Dsonar.github.login=${env.GH_LOGIN} -Dsonar.github.password=${env.GH_PASSWORD} \
                                                         -Dsonar.github.oauth=${env.OATH} "
@@ -90,7 +91,7 @@ node {
 
                     messagePR+="fin ${env.JOB_NAME} <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/${env.BRANCH_NAME}/${env.BUILD_NUMBER}/artifact/target/sonar/sonar-report.json'>report Sonar</a>"
 
-                    sendCommentToPullRequest(messagePR)
+                    sendCommentToPullRequest(prId, messagePR)
                 }
             }
         }

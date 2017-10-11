@@ -63,7 +63,7 @@ node {
 
 
             def messagePR=""
-            def prId="${env.BRANCH_NAME.substring(3)
+            def prId="${env.BRANCH_NAME.substring(3)}"
 
 
 

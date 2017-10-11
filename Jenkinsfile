@@ -78,19 +78,20 @@ node {
                     echo "metrics sonar"
                     sh "mvn sonar:sonar -Dsonar.analysis.mode=preview $sonarParam $databaseSonarParam $githubSonarParam -B"
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/sonar', reportFiles: '*', reportName: 'sonar site', reportTitles: 'sonar'])
-                    messagePR+="rapport sonar : <a href='http://localhost:9000/jenkinscraft'>here</a> and <a href='${jenkinsJobUrl}/sonar_site/index.html'>here</a> <br/>"
+                    messagePR+="rapport sonar : <a href='http://localhost:9000/jenkinscraft'>here</a> and <a href='${jenkinsJobUrl}//sonar_site/index.html'>here</a> <br/>"
 
                     echo "metrics pitest"
-                    sh "mvn pitest:mutationCoverage -B"
+                    sh "mvn pitest:mutationCoverage -DreportsDirectory=pit-reports -B"
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: '*', reportName: 'pitest site', reportTitles: 'pitest'])
-                    messagePR+="rapport pitest : <a href='${jenkinsJobUrl}/pitest_site/index.html'>here</a> <br/>"
+                    messagePR+="rapport pitest : <a href='${jenkinsJobUrl}//pitest_site/index.html'>here</a> <br/>"
 
                     echo "metrics site"
                     sh "mvn site -B"
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: '*', reportName: 'HTML site', reportTitles: 'site'])
                     messagePR+="rapport site : <a href='${jenkinsJobUrl}//HTML_site/index.html'>here</a> <br/>"
+                    messagePR+="rapport site : <a href='${jenkinsJobUrl}/HTML_site/index.html'>here</a> <br/>"
 
-                    messagePR+="fin ${env.JOB_NAME} <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/${env.BRANCH_NAME}/${env.BUILD_NUMBER}/artifact/target/sonar/sonar-report.json'>report Sonar</a>"
+                    messagePR+="job : ${env.JOB_NAME}"
 
                     sendCommentToPullRequest(prId, messagePR)
                 }

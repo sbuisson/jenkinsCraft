@@ -81,7 +81,7 @@ node {
                     messagePR+="rapport sonar : <a href='http://localhost:9000/jenkinscraft'>here</a> and <a href='${jenkinsJobUrl}//sonar_site/index.html'>here</a> <br/>"
 
                     echo "metrics pitest"
-                    sh "mvn pitest:mutationCoverage -DreportsDirectory=pit-reports -B"
+                    sh "mvn pitest:mutationCoverage -DreportsDirectory=target/pit-reports -B"
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: '*', reportName: 'pitest site', reportTitles: 'pitest'])
                     messagePR+="rapport pitest : <a href='${jenkinsJobUrl}//pitest_site/index.html'>here</a> <br/>"
 

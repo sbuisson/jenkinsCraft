@@ -98,10 +98,11 @@ script {
 
                 checkout scm
 
-                step ([$class: 'hudson.plugins.sonar.SonarPublisher'
-
-                      ]
-                )
+                publisher {
+                    sonar {
+                        branch('master')
+                    }
+                }
 
                 script {
                   /*  sh "mvn -v"

@@ -52,7 +52,7 @@ node {
         //sonar part
         def databaseSonarParam = " -Dsonar.jdbc.username=ci_user -Dsonar.jdbc.password=ci -Dsonar.jdbc.url=jdbc:postgresql://postgres:5432/ci "
         def sonarParam = " -Dsonar.host.url=http://sonarqube:9000 -Dsonar.login=admin -Dsonar.password=admin "
-        def jenkinsJobUrl="http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/${env.BRANCH_NAME}/${env.BUILD_NUMBER}"
+        def jenkinsJobUrl="http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/${env.BRANCH_NAME}"
 
         if ("master" == env.BRANCH_NAME) {
             echo "sonar master"
@@ -77,18 +77,18 @@ node {
 
                     echo "metrics sonar"
                     sh "mvn sonar:sonar -Dsonar.analysis.mode=preview $sonarParam $databaseSonarParam $githubSonarParam -B"
-                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/sonar', reportFiles: '*', reportName: 'sonar', reportTitles: 'sonar'])
-                    messagePR+="rapport sonar : <a href='http://localhost:9000/jenkinscraft'>here</a> <br/>"
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/sonar', reportFiles: '*', reportName: 'sonar site', reportTitles: 'sonar'])
+                    messagePR+="rapport sonar : <a href='http://localhost:9000/jenkinscraft'>here</a> and <a href='${jenkinsJobUrl}/sonar_site/index.html'>here</a> <br/>"
 
                     echo "metrics pitest"
                     sh "mvn pitest:mutationCoverage -B"
-                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: '*', reportName: 'pitest', reportTitles: 'pitest'])
-                    messagePR+="rapport pitest : <a href='${jenkinsJobUrl}/site/pitest/index.html'>here</a> <br/>"
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: '*', reportName: 'pitest site', reportTitles: 'pitest'])
+                    messagePR+="rapport pitest : <a href='${jenkinsJobUrl}/pitest_site/index.html'>here</a> <br/>"
 
                     echo "metrics site"
                     sh "mvn site -B"
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/site', reportFiles: '*', reportName: 'HTML site', reportTitles: 'site'])
-                    messagePR+="rapport site : <a href='${jenkinsJobUrl}/site/index.html'>here</a> <br/>"
+                    messagePR+="rapport site : <a href='${jenkinsJobUrl}//HTML_site/index.html'>here</a> <br/>"
 
                     messagePR+="fin ${env.JOB_NAME} <a href='http://localhost:8080/job/sbuisson/job/jenkinsCraft/view/change-requests/job/${env.BRANCH_NAME}/${env.BUILD_NUMBER}/artifact/target/sonar/sonar-report.json'>report Sonar</a>"
 

@@ -31,6 +31,7 @@ def getTitle(json) {
 }
 void sendCommentToPullRequest(String prId, String messageContent){
 
+
      def SHA1 ="SHA1"
      script {
         SHA1 = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
@@ -80,7 +81,7 @@ node {
                     messagePR+="rapport sonar : <a href='http://localhost:9000/jenkinscraft'>here</a> <br/>"
 
                     echo "metrics pitest"
-                    sh "mvn pitest:scmMutationCoverage -B"
+                    sh "mvn pitest:mutationCoverage -B"
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'target/pit-reports', reportFiles: '*', reportName: 'pitest', reportTitles: 'pitest'])
                     messagePR+="rapport pitest : <a href='${jenkinsJobUrl}/site/pitest/index.html'>here</a> <br/>"
 

@@ -1,2 +1,3 @@
 
+
  mvn -Dsonar.analysis.mode=preview      -Dsonar.github.pullRequest=3   -Dsonar.github.repository=sbuisson/jenkinsCraft       -Dsonar.github.login=sbuisson -Dsonar.github.password=SaraBui37 sonar:sonar   -Dsonar.host.url=http://localhost:9000  -Dsonar.verbose=true  -Dsonar.login=admin  -Dsonar.password=admin site

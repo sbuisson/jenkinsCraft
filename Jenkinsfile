@@ -74,7 +74,8 @@ node {
                     def githubSonarParam="-Dsonar.github.pullRequest=${prId}\
                                                         -Dsonar.github.repository=sbuisson/jenkinsCraft \
                                                         -Dsonar.github.login=${env.GH_LOGIN} \
-                                                        -Dsonar.github.oauth=${env.OATH} "
+                                                        -Dsonar.github.oauth=${env.GH_PASSWORD}  \
+                                                        -Dsonar.verbose=true "
 // -Dsonar.github.password=${env.GH_PASSWORD}
 
                     sh "mvn sonar:sonar -Dsonar.analysis.mode=issues $sonarParam $databaseSonarParam $githubSonarParam -B"
